@@ -18,6 +18,19 @@ Every tenant is an `organization`. A user's access to everything else — projec
 | `tasks` | Belongs to one project, optionally assigned to a sprint and/or a profile. |
 | `audit_log` | Append-only. No update/delete policy exists for any role — entries can never be edited or removed once written. |
 
+## Database schema (`supabase/migrations/20260705000001_sprint2_schema.sql`)
+
+| Table | Purpose |
+|---|---|
+| `meeting_summaries` | A pasted transcript plus its AI-generated summary. Optionally scoped to a project. |
+| `action_items` | Action items extracted from a meeting summary; `task_id` links to the real task once added to the tracker. |
+| `decision_log` | Standalone or meeting-linked decision records (title, decision, rationale). |
+| `knowledge_base_pages` | Org wiki pages with a generated `tsvector` column (`body_search`) for Postgres full-text search. |
+| `automation_rules` | Trigger→action rules (`trigger_type`/`trigger_config`, `action_type`/`action_config` as jsonb); execution logic lives in application code, not a DB trigger. |
+| `approvals` / `approval_steps` | Sequential multi-step approval requests. Status transitions are gated by `create_approval_request()` / `decide_approval_step()` — never a plain client update — so a requester can't approve their own request and steps must be decided in order. |
+| `ai_reports` | AI-generated executive reports (weekly updates, health scores, risk analysis, dependency graphs). No client insert policy — written by the background report job via the service-role client. |
+| `chat_threads` / `chat_messages` | Cross-team threaded chat, org- or project-scoped. Messages are immutable once posted; Realtime-enabled the same way `notifications` is. |
+
 ## RLS design
 
 Two SECURITY DEFINER helper functions do the membership lookups so policies stay one-liners and so `org_members`' own policies don't recurse into themselves:

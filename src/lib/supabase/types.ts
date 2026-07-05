@@ -8,6 +8,9 @@ export type InviteStatus = "pending" | "accepted" | "revoked";
 export type SprintStatus = "planned" | "active" | "completed";
 export type TaskStatus = "todo" | "in_progress" | "in_review" | "done";
 export type TaskPriority = "low" | "medium" | "high" | "urgent";
+export type ActionItemStatus = "pending" | "added" | "dismissed";
+export type ApprovalStatus = "pending" | "approved" | "rejected";
+export type AiReportType = "weekly_update" | "health_score" | "risk_analysis" | "dependency_graph";
 
 export type Database = {
   public: {
@@ -294,6 +297,340 @@ export type Database = {
         };
         Relationships: [];
       };
+      meeting_summaries: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          title: string;
+          raw_transcript: string;
+          summary: string;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          title: string;
+          raw_transcript: string;
+          summary: string;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          title?: string;
+          raw_transcript?: string;
+          summary?: string;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      action_items: {
+        Row: {
+          id: string;
+          org_id: string;
+          meeting_summary_id: string;
+          description: string;
+          task_id: string | null;
+          status: ActionItemStatus;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          meeting_summary_id: string;
+          description: string;
+          task_id?: string | null;
+          status?: ActionItemStatus;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          meeting_summary_id?: string;
+          description?: string;
+          task_id?: string | null;
+          status?: ActionItemStatus;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      decision_log: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          meeting_summary_id: string | null;
+          title: string;
+          decision: string;
+          rationale: string | null;
+          decided_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          meeting_summary_id?: string | null;
+          title: string;
+          decision: string;
+          rationale?: string | null;
+          decided_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          meeting_summary_id?: string | null;
+          title?: string;
+          decision?: string;
+          rationale?: string | null;
+          decided_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      knowledge_base_pages: {
+        Row: {
+          id: string;
+          org_id: string;
+          slug: string;
+          title: string;
+          body: string;
+          body_search: unknown;
+          created_by: string | null;
+          updated_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          slug: string;
+          title: string;
+          body?: string;
+          created_by?: string | null;
+          updated_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          slug?: string;
+          title?: string;
+          body?: string;
+          created_by?: string | null;
+          updated_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      automation_rules: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          name: string;
+          is_active: boolean;
+          trigger_type: string;
+          trigger_config: Json;
+          action_type: string;
+          action_config: Json;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          name: string;
+          is_active?: boolean;
+          trigger_type: string;
+          trigger_config?: Json;
+          action_type: string;
+          action_config?: Json;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          name?: string;
+          is_active?: boolean;
+          trigger_type?: string;
+          trigger_config?: Json;
+          action_type?: string;
+          action_config?: Json;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      approvals: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          title: string;
+          description: string | null;
+          requested_by: string | null;
+          status: ApprovalStatus;
+          created_at: string;
+          resolved_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          title: string;
+          description?: string | null;
+          requested_by?: string | null;
+          status?: ApprovalStatus;
+          created_at?: string;
+          resolved_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          title?: string;
+          description?: string | null;
+          requested_by?: string | null;
+          status?: ApprovalStatus;
+          created_at?: string;
+          resolved_at?: string | null;
+        };
+        Relationships: [];
+      };
+      approval_steps: {
+        Row: {
+          id: string;
+          approval_id: string;
+          org_id: string;
+          step_order: number;
+          approver_id: string;
+          status: ApprovalStatus;
+          comment: string | null;
+          decided_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          approval_id: string;
+          org_id: string;
+          step_order: number;
+          approver_id: string;
+          status?: ApprovalStatus;
+          comment?: string | null;
+          decided_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          approval_id?: string;
+          org_id?: string;
+          step_order?: number;
+          approver_id?: string;
+          status?: ApprovalStatus;
+          comment?: string | null;
+          decided_at?: string | null;
+        };
+        Relationships: [];
+      };
+      ai_reports: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          report_type: AiReportType;
+          content: Json;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          report_type: AiReportType;
+          content?: Json;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          report_type?: AiReportType;
+          content?: Json;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      chat_threads: {
+        Row: {
+          id: string;
+          org_id: string;
+          project_id: string | null;
+          title: string;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          project_id?: string | null;
+          title: string;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          project_id?: string | null;
+          title?: string;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      chat_messages: {
+        Row: {
+          id: string;
+          thread_id: string;
+          org_id: string;
+          author_id: string | null;
+          body: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          thread_id: string;
+          org_id: string;
+          author_id?: string | null;
+          body: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          thread_id?: string;
+          org_id?: string;
+          author_id?: string | null;
+          body?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -343,6 +680,20 @@ export type Database = {
       accept_org_invite: {
         Args: { p_token: string };
         Returns: Database["public"]["Tables"]["organizations"]["Row"];
+      };
+      create_approval_request: {
+        Args: {
+          p_org_id: string;
+          p_project_id: string | null;
+          p_title: string;
+          p_description: string | null;
+          p_approver_ids: string[];
+        };
+        Returns: Database["public"]["Tables"]["approvals"]["Row"];
+      };
+      decide_approval_step: {
+        Args: { p_step_id: string; p_decision: string; p_comment?: string | null };
+        Returns: Database["public"]["Tables"]["approvals"]["Row"];
       };
     };
     Enums: Record<string, never>;
