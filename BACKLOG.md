@@ -59,7 +59,7 @@ Legend: `[ ]` open · `[x]` shipped
 
 ### Hardening
 - [x] `S2-12` [Hardening] RLS + rate-limit audit across all Sprint 1 + Sprint 2 tables/routes
-- [ ] `S2-13` [Hardening] Error tracking wired in (free-tier service) + core-flow test coverage (auth, org, task, sprint, agent, automation happy paths)
+- [x] `S2-13` [Hardening] Error tracking wired in (free-tier service) + core-flow test coverage (auth, org, task, sprint, agent, automation happy paths)
 
 ### Docs
 - [ ] `S2-D1` [Docs] `ARCHITECTURE.md` update — full schema, API surface, agent design

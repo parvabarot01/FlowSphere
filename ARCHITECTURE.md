@@ -55,8 +55,15 @@ Role gating in Sprint 1: any active member can create/edit projects, sprints, an
 - **Resend free tier:** 3,000 emails/month, 100/day.
 - **Upstash free tier:** 500K commands/month (Redis), 500 messages/day (QStash).
 - **Groq free tier:** rate-limited requests/tokens-per-minute, varies by model — the department-agent framework needs to queue/backoff around this rather than fan out requests freely.
+- **Sentry free tier:** 5,000 errors/month, 1 team member on the Developer plan.
 
 None of these are close to being hit at current scale; noted here so a later hardening pass has a baseline to check against.
+
+## Error tracking & testing (hardening pass)
+
+Server- and edge-runtime errors are reported to Sentry via `src/instrumentation.ts` + `sentry.server.config.ts` / `sentry.edge.config.ts`, following the same fails-open convention as every other integration: `Sentry.init` runs with `enabled: false` when `SENTRY_DSN` isn't set, so this is inert until a Sentry project is created and the DSN added to env vars (a manual one-time step, same as Vercel project linking). Client-side (browser) error capture isn't wired up yet — Next.js 14's App Router requires either the Sentry wizard's `next.config` wrapping or a manually-imported `sentry.client.config.ts`, and doing that without a real DSN to verify against risked repeating the kind of build-time breakage QStash's signature verification caused earlier, so it's left as a follow-up once Sentry is actually configured.
+
+Core-flow logic is covered by Vitest (`npm test`, wired into CI): validation schemas for auth, org, task, sprint, agent-draft, and automation requests, plus the automation engine's trigger-matching logic (`src/lib/automation/matcher.ts`, split out from `engine.ts` specifically so it's testable without a live Supabase connection) and the slug helper. These are unit tests against pure logic, not integration tests against a real database — full end-to-end coverage of the happy paths (create org → invite → task → sprint → agent draft → automation fire) needs a real Supabase project to run against, which is a follow-up once one is connected.
 
 ## Rate limiting (hardening pass)
 
