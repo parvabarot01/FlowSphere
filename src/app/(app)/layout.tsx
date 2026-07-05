@@ -20,7 +20,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-3">
-        <span className="text-lg font-semibold text-slate-900">FlowSphere</span>
+        <Link href="/dashboard" className="text-lg font-semibold text-slate-900">
+          FlowSphere
+        </Link>
         <div className="flex items-center gap-4">
           <Link href="/health" className="text-sm text-slate-500 hover:text-slate-900">
             Health
