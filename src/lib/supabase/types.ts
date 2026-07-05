@@ -3,6 +3,8 @@
 export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 
 export type OrgRole = "owner" | "admin" | "member";
+export type InviteRole = "admin" | "member";
+export type InviteStatus = "pending" | "accepted" | "revoked";
 export type SprintStatus = "planned" | "active" | "completed";
 export type TaskStatus = "todo" | "in_progress" | "in_review" | "done";
 export type TaskPriority = "low" | "medium" | "high" | "urgent";
@@ -220,6 +222,42 @@ export type Database = {
         Update: Record<string, never>;
         Relationships: [];
       };
+      org_invites: {
+        Row: {
+          id: string;
+          org_id: string;
+          email: string;
+          role: InviteRole;
+          token: string;
+          invited_by: string | null;
+          status: InviteStatus;
+          created_at: string;
+          accepted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          email: string;
+          role?: InviteRole;
+          token?: string;
+          invited_by?: string | null;
+          status?: InviteStatus;
+          created_at?: string;
+          accepted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          email?: string;
+          role?: InviteRole;
+          token?: string;
+          invited_by?: string | null;
+          status?: InviteStatus;
+          created_at?: string;
+          accepted_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -244,6 +282,20 @@ export type Database = {
       get_org_role: {
         Args: { p_org_id: string };
         Returns: OrgRole | null;
+      };
+      get_invite_by_token: {
+        Args: { p_token: string };
+        Returns: {
+          org_name: string;
+          org_slug: string;
+          email: string;
+          role: InviteRole;
+          status: InviteStatus;
+        }[];
+      };
+      accept_org_invite: {
+        Args: { p_token: string };
+        Returns: Database["public"]["Tables"]["organizations"]["Row"];
       };
     };
     Enums: Record<string, never>;
