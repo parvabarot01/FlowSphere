@@ -17,29 +17,24 @@ Living document — updated at the end of every sprint. Status reflects what's a
 
 **MVP is done when:** a user can create an org, invite teammates, create a project with tasks, plan a sprint, and get notified of assignments. All true as of Sprint 1.
 
-## V1 — Sprint 2 (AI department agents + knowledge base)
+## V1+V2 — Sprint 2 (Final): AI department agents, knowledge base, automation, reporting, executive layer
 
-**Status: not started.**
+*Combines the former separate Sprint 2 (V1) and Sprint 3 (V2) into one sprint, per a mid-project decision to stop pausing between them — see `BACKLOG.md`.*
 
-- [ ] Agent framework: one shared Groq client, per-department system prompts (Product, Engineering, Marketing, etc.), selectable per query
-- [ ] AI-generated sprint plans and backlog drafts
-- [ ] Meeting transcript → structured summary + action items, auto-added to the task tracker
-- [ ] Knowledge base / wiki with Postgres full-text search
-- [ ] Decision log tied to meeting summaries
+**Status: shipped.**
 
-**V1 is done when:** a user can paste a meeting transcript and get a structured summary with action items auto-added to the tracker, and can query a department agent for a sprint plan or backlog draft. This is the point where FlowSphere stops being "a task tracker" and starts being the AI-native product described in `PROJECT_PLAN.md`.
+- [x] Agent framework: one shared Groq client, per-department system prompts (Product, Engineering, Design/QA, Executive), retry/backoff around Groq's free-tier rate limits
+- [x] Meeting transcript → structured summary + action items, auto-added to the task tracker
+- [x] AI-generated department sprint plans and backlog drafts, grounded in existing tasks
+- [x] Knowledge base / wiki with Postgres full-text search
+- [x] Decision log + action item tracker tied to meeting summaries
+- [x] Trigger → action workflow automation, executed via QStash
+- [x] Approvals module (sequential multi-step flow)
+- [x] AI-generated executive reports: weekly updates, project health scores, risk analysis, dependency graphs
+- [x] Cross-team threaded chat (Realtime-backed)
+- [x] Hardening pass: RLS + rate-limit audit, error tracking (Sentry, server/edge), core-flow test coverage (Vitest)
 
-## V2 — Sprint 3 (Workflow automation, reporting, executive layer, launch polish)
-
-**Status: not started.**
-
-- [ ] Trigger → action workflow automation (e.g., "task marked blocked → notify assignee's manager")
-- [ ] Approvals module (basic multi-step flow)
-- [ ] AI-generated executive reports: weekly updates, project health scores, risk analysis, dependency graphs
-- [ ] Cross-team threaded chat (Realtime-backed)
-- [ ] Hardening pass: RLS audit, rate-limit audit, error tracking, core-flow test coverage
-
-**V2 is done when:** the full loop — task/meeting activity → automation → AI report → executive rollup — is demoable end to end and deployed. This is the "operating system" positioning fully realized.
+**Done when:** a user can paste a meeting transcript and get a structured summary with action items auto-added to the tracker; query a department agent for a sprint plan or backlog draft; automate a trigger→action rule; route a request through approval; get an AI executive report; and chat cross-team — all true as of this sprint. This is the "operating system" positioning fully realized, and the point where FlowSphere stops being "a task tracker" and becomes the AI-native product described in `PROJECT_PLAN.md`.
 
 ## Beyond V2 (not committed, tracked for later prioritization)
 

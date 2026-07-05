@@ -63,7 +63,7 @@ Legend: `[ ]` open · `[x]` shipped
 
 ### Docs
 - [x] `S2-D1` [Docs] `ARCHITECTURE.md` update — full schema, API surface, agent design
-- [ ] `S2-D2` [Docs] `EXECUTIVE_SUMMARY.md`
-- [ ] `S2-D3` [Docs] `GTM_STRATEGY.md`
-- [ ] `S2-D4` [Docs] `PRICING_STRATEGY.md`
-- [ ] `S2-D5` [Docs] One-page Executive Presentation doc
+- [x] `S2-D2` [Docs] `EXECUTIVE_SUMMARY.md`
+- [x] `S2-D3` [Docs] `GTM_STRATEGY.md`
+- [x] `S2-D4` [Docs] `PRICING_STRATEGY.md`
+- [x] `S2-D5` [Docs] One-page Executive Presentation doc
