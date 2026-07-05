@@ -42,7 +42,7 @@ Legend: `[ ]` open · `[x]` shipped
 
 ### Infra
 - [x] `S2-01` [Infra] Groq agent framework — shared Groq client (Llama 3.3 70B), per-department system prompts (Product, Engineering, Design/QA, Executive), retry/backoff around free-tier rate limits
-- [ ] `S2-02` [Infra] Upstash QStash wiring — background job queue for long-running AI work (report generation, automation execution) so requests don't block on Groq latency
+- [x] `S2-02` [Infra] Upstash QStash wiring — background job queue for long-running AI work (report generation, automation execution) so requests don't block on Groq latency
 - [ ] `S2-03` [Infra] Schema & RLS for Sprint 2 scope — `knowledge_base_pages`, `decision_log`, `action_items`, `automation_rules`, `approvals` (+ steps), `ai_reports`, `chat_threads`/`chat_messages` tables, migrations, RLS policies per table
 
 ### Features — AI agents + knowledge base
