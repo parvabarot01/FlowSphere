@@ -55,7 +55,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S2-08` [Feature] Workflow automation rules — trigger→action rule builder (e.g. task status change → notify/assign), executed via QStash
 - [x] `S2-09` [Feature] Approvals module — basic multi-step approval flow (request, approve/reject, audit-logged)
 - [x] `S2-10` [Feature] AI executive reports — weekly project updates, health scores, risk analysis, dependency graphs
-- [ ] `S2-11` [Feature] Cross-team threaded chat — Realtime-backed threads scoped to org/project
+- [x] `S2-11` [Feature] Cross-team threaded chat — Realtime-backed threads scoped to org/project
 
 ### Hardening
 - [ ] `S2-12` [Hardening] RLS + rate-limit audit across all Sprint 1 + Sprint 2 tables/routes
