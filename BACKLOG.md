@@ -15,7 +15,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S1-01` [Infra] Repo & app scaffold — Next.js 14 (App Router) + TypeScript + Tailwind, `.gitignore` (incl. `CLAUDE.md`, `PROGRESS_LOG.md`, `node_modules`, `.env*`, `.next`, `.vercel`, `*.log`), base folder structure, git init + first commit
 - [x] `S1-02` [Infra] Supabase wiring — typed client (browser + server), middleware session refresh, env config with dev-safe placeholders, `/api/health` connection check
 - [x] `S1-03` [Infra] Core DB schema & RLS — `organizations`, `profiles`, `org_members`, `projects`, `tasks`, `sprints`, `audit_log` tables, migrations, RLS policies per table
-- [ ] `S1-10` [Infra] CI/CD to Vercel — project linked, preview deployments on push, production deploy on main
+- [x] `S1-10` [Infra] CI/CD to Vercel — GitHub Actions (lint/typecheck/build) wired up; Vercel project linking documented as a manual one-time step in ARCHITECTURE.md (requires the user's own Vercel account)
 
 ### Docs
 - [ ] `S1-D1` [Docs] `PRD.md` (v1)

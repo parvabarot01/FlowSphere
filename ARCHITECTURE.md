@@ -44,3 +44,13 @@ Role gating in Sprint 1: any active member can create/edit projects, sprints, an
 - **Groq free tier:** rate-limited requests/tokens-per-minute, varies by model — the department-agent framework in Sprint 2 needs to queue/backoff around this rather than fan out requests freely.
 
 None of these are close to being hit at Sprint 1 scale; noted here so Sprint 3's hardening pass has a baseline to check against.
+
+## CI/CD
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every push and PR to `main`: install, lint, typecheck, build. This needs no external account and is wired up as of Sprint 1.
+
+Production hosting is Vercel, which deploys straight from this GitHub repo — but connecting a repo to Vercel is a one-time action tied to a personal Vercel account, so it can't be scripted from here. To finish this half:
+
+1. Go to vercel.com → **Add New Project** → import this GitHub repo (`parvabarot01/FlowSphere`).
+2. In the project's **Environment Variables** settings, add the same keys listed in `.env.example` (Supabase, Upstash, Groq, Resend) once those services are set up.
+3. Vercel then auto-deploys a preview on every PR and promotes `main` to production on merge — no further setup needed.
