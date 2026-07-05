@@ -36,6 +36,7 @@ yarn-error.log*
 CLAUDE.md
 PROGRESS_LOG.md
 FlowSphere_Project_Plan.md
+.claude/
 
 # typescript
 *.tsbuildinfo
