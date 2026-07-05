@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createTaskSchema, updateTaskStatusSchema } from "@/lib/validations/task";
 import { createClient } from "@/lib/supabase/server";
 import { notifyTaskAssignment } from "@/lib/notify";
+import { triggerAutomation } from "@/lib/automation/trigger";
 
 export type TaskActionState = { error?: string };
 
@@ -68,6 +69,16 @@ export async function createTask(
     });
   }
 
+  await triggerAutomation({
+    trigger: "task_created",
+    orgId,
+    projectId,
+    taskId: task.id,
+    taskTitle: parsed.data.title,
+    priority: parsed.data.priority,
+    assigneeId: parsed.data.assigneeId || null,
+  });
+
   revalidatePath(`/org/${orgSlug}/projects/${projectId}`);
   return {};
 }
@@ -83,7 +94,12 @@ export async function updateTaskStatus(
   if (!parsed.success) return;
 
   const supabase = createClient();
-  await supabase.from("tasks").update({ status: parsed.data.status }).eq("id", taskId);
+  const { data: task } = await supabase
+    .from("tasks")
+    .update({ status: parsed.data.status })
+    .eq("id", taskId)
+    .select("title, assignee_id")
+    .single();
 
   await supabase.rpc("log_audit_event", {
     p_org_id: orgId,
@@ -92,6 +108,18 @@ export async function updateTaskStatus(
     p_entity_id: taskId,
     p_metadata: { status: parsed.data.status },
   });
+
+  if (task) {
+    await triggerAutomation({
+      trigger: "task_status_changed",
+      orgId,
+      projectId,
+      taskId,
+      taskTitle: task.title,
+      toStatus: parsed.data.status,
+      assigneeId: task.assignee_id,
+    });
+  }
 
   revalidatePath(`/org/${orgSlug}/projects/${projectId}`);
 }

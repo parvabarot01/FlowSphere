@@ -52,7 +52,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S2-07` [Feature] Decision log + action item tracker — log decisions tied to meeting summaries, track action items to completion
 
 ### Features — automation, reporting, executive layer
-- [ ] `S2-08` [Feature] Workflow automation rules — trigger→action rule builder (e.g. task status change → notify/assign), executed via QStash
+- [x] `S2-08` [Feature] Workflow automation rules — trigger→action rule builder (e.g. task status change → notify/assign), executed via QStash
 - [ ] `S2-09` [Feature] Approvals module — basic multi-step approval flow (request, approve/reject, audit-logged)
 - [ ] `S2-10` [Feature] AI executive reports — weekly project updates, health scores, risk analysis, dependency graphs
 - [ ] `S2-11` [Feature] Cross-team threaded chat — Realtime-backed threads scoped to org/project

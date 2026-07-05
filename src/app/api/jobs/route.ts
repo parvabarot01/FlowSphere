@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
 import { getJobHandler } from "@/lib/jobs/registry";
+// Side-effect import: this route runs in its own module graph (a real QStash
+// callback hits it directly), so every job handler must be imported here too,
+// not just wherever triggerAutomation()/publishJob() happen to be called from.
+import "@/lib/automation/engine";
 
 export const dynamic = "force-dynamic";
 
