@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowSphere
 
-## Getting Started
+FlowSphere is an AI-native workplace operating system: one collaborative workspace for sprint planning, task tracking, meeting summaries, documentation, and cross-team communication — instead of stitching together Slack, Jira, Notion, Confluence, and Zoom. Every department gets an agent that lives inside the workspace and handles the repetitive glue work of turning meetings, docs, and tasks into a single coherent picture.
 
-First, run the development server:
+See [`PROJECT_PLAN.md`](./PROJECT_PLAN.md) for product vision, target users, tech stack, and the sprint roadmap. See [`PRD.md`](./PRD.md), [`PERSONAS.md`](./PERSONAS.md), and [`ARCHITECTURE.md`](./ARCHITECTURE.md) as they're added.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Hosting:** Vercel
+- **Database & Auth:** Supabase (Postgres, Auth, Storage, RLS, Realtime)
+- **Background jobs / queue:** Upstash Redis + QStash
+- **AI agents:** Groq API (Llama 3.3 70B)
+- **Email:** Resend
+- **Search:** Postgres full-text search
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Copy `.env.example` to `.env.local` and fill in your own service keys (Supabase, Upstash, Groq, Resend).
+3. Run the dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app` — routes and pages (Next.js App Router)
+- `src/components` — shared UI components
+- `src/lib` — clients, helpers, and shared server/browser utilities
+- `supabase/migrations` — database schema and RLS policy migrations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary — all rights reserved.
