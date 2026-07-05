@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { summarizeTranscriptSchema } from "@/lib/validations/meeting";
 import { summarizeMeetingTranscript } from "@/lib/ai/meeting-summary";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type SummarizeTranscriptState = { error?: string };
 
@@ -23,15 +24,26 @@ export async function summarizeTranscript(
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
-  const outcome = await summarizeMeetingTranscript(parsed.data.transcript);
-  if (!outcome.success) {
-    return { error: outcome.error };
-  }
-
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be signed in." };
+  }
+
+  // Groq's free tier is rate-limited account-wide, so per-user throttling here
+  // protects the shared quota from being exhausted by rapid submissions.
+  const { success } = await rateLimit("ai-agent", user.id, 10, "60 s");
+  if (!success) {
+    return { error: "Too many AI requests — please wait a minute and try again." };
+  }
+
+  const outcome = await summarizeMeetingTranscript(parsed.data.transcript);
+  if (!outcome.success) {
+    return { error: outcome.error };
+  }
 
   const { data: meetingSummary, error: insertError } = await supabase
     .from("meeting_summaries")

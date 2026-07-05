@@ -54,9 +54,19 @@ Role gating in Sprint 1: any active member can create/edit projects, sprints, an
 - **Supabase free tier:** 500MB database, 5GB bandwidth/month, project pauses after 1 week of inactivity (auto-resumes on first request, with a cold-start delay).
 - **Resend free tier:** 3,000 emails/month, 100/day.
 - **Upstash free tier:** 500K commands/month (Redis), 500 messages/day (QStash).
-- **Groq free tier:** rate-limited requests/tokens-per-minute, varies by model — the department-agent framework in Sprint 2 needs to queue/backoff around this rather than fan out requests freely.
+- **Groq free tier:** rate-limited requests/tokens-per-minute, varies by model — the department-agent framework needs to queue/backoff around this rather than fan out requests freely.
 
-None of these are close to being hit at Sprint 1 scale; noted here so Sprint 3's hardening pass has a baseline to check against.
+None of these are close to being hit at current scale; noted here so a later hardening pass has a baseline to check against.
+
+## Rate limiting (hardening pass)
+
+Every route that spends a shared free-tier quota is throttled per-actor via `rateLimit()` (`src/lib/rate-limit.ts`, Upstash sliding window, fails open if Upstash isn't configured):
+
+- **`ai-agent`** (10/60s per user): meeting transcript summarization, department agent drafts, and executive report requests all call Groq, so they share one bucket keyed by user id — this is what actually protects the account-wide Groq rate limit, not per-feature limits.
+- **`invite-email`** (20/60s per org): invite sends, since Resend's free tier caps at 100/day.
+- **`login`** / **`signup`** (Sprint 1): per IP+email and per IP respectively, to slow credential-stuffing and signup spam.
+
+RLS-wise, the Sprint 2 tables follow the same two patterns already established in Sprint 1: plain member-scoped CRUD (`meeting_summaries`, `action_items`, `decision_log`, `knowledge_base_pages`, `automation_rules` — delete admin-gated) for anything a member should freely manage, and trusted-gateway-only writes (`approvals`/`approval_steps` via `create_approval_request`/`decide_approval_step`, `ai_reports` via the service-role background job) for anything where a direct client write would let someone forge state — approving their own request, or hand-writing a fake AI report.
 
 ## CI/CD
 

@@ -5,6 +5,8 @@ import { z } from "zod";
 import { getProjectTasks } from "@/lib/tasks";
 import { getProjectSprints } from "@/lib/sprints";
 import { triggerReportGeneration } from "@/lib/reports/trigger";
+import { createClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/rate-limit";
 
 const requestReportSchema = z.object({
   reportType: z.enum(["weekly_update", "health_score", "risk_analysis", "dependency_graph"]),
@@ -24,6 +26,22 @@ export async function requestReport(
 
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be signed in." };
+  }
+
+  // Groq's free tier is rate-limited account-wide, so per-user throttling here
+  // protects the shared quota from being exhausted by rapid submissions.
+  const { success } = await rateLimit("ai-agent", user.id, 10, "60 s");
+  if (!success) {
+    return { error: "Too many AI requests — please wait a minute and try again." };
   }
 
   const [tasks, sprints] = await Promise.all([getProjectTasks(projectId), getProjectSprints(projectId)]);

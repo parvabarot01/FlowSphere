@@ -5,6 +5,7 @@ import { inviteMemberSchema, updateMemberRoleSchema } from "@/lib/validations/in
 import { createClient } from "@/lib/supabase/server";
 import { sendEmail } from "@/lib/email";
 import { env } from "@/lib/env";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type MemberActionState = { error?: string; message?: string };
 
@@ -28,6 +29,13 @@ export async function inviteMember(
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  // Resend's free tier caps out at 100 emails/day — this keeps a single org
+  // from burning through that quota via rapid invite submissions.
+  const { success } = await rateLimit("invite-email", orgId, 20, "60 s");
+  if (!success) {
+    return { error: "Too many invites sent — please wait a minute and try again." };
+  }
 
   const { data: invite, error } = await supabase
     .from("org_invites")
