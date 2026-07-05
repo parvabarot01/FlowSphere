@@ -30,7 +30,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S1-06` [Feature] Team invites & RBAC — invite by email, roles (owner/admin/member), accept-invite flow, role-gated actions
 - [x] `S1-07` [Feature] Audit log — write-path hook recording key actions (org/member/project/task/sprint changes) + basic viewer UI
 - [x] `S1-08` [Feature] Projects & tasks — create/assign/status CRUD, list + board view
-- [ ] `S1-09` [Feature] Sprint planning board — create sprints, assign tasks to a sprint, sprint board view
+- [x] `S1-09` [Feature] Sprint planning board — create sprints, assign tasks to a sprint, sprint board view
 - [ ] `S1-11` [Feature] Notifications & calendar — in-app notifications (Supabase Realtime) + email via Resend on assignment; calendar view of tasks/sprints by due date
 
 ---
