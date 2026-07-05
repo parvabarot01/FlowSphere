@@ -12,9 +12,9 @@ Legend: `[ ]` open · `[x]` shipped
 **Done when:** a user can create an org, invite teammates, create a project with tasks, plan a sprint, and get notified of assignments.
 
 ### Infra
-- [ ] `S1-01` [Infra] Repo & app scaffold — Next.js 14 (App Router) + TypeScript + Tailwind, `.gitignore` (incl. `CLAUDE.md`, `PROGRESS_LOG.md`, `node_modules`, `.env*`, `.next`, `.vercel`, `*.log`), base folder structure, git init + first commit
-- [ ] `S1-02` [Infra] Supabase wiring — project connected, typed client (browser + server), env config, connection health check
-- [ ] `S1-03` [Infra] Core DB schema & RLS — `organizations`, `profiles`, `org_members`, `projects`, `tasks`, `sprints`, `audit_log` tables, migrations, RLS policies per table
+- [x] `S1-01` [Infra] Repo & app scaffold — Next.js 14 (App Router) + TypeScript + Tailwind, `.gitignore` (incl. `CLAUDE.md`, `PROGRESS_LOG.md`, `node_modules`, `.env*`, `.next`, `.vercel`, `*.log`), base folder structure, git init + first commit
+- [x] `S1-02` [Infra] Supabase wiring — typed client (browser + server), middleware session refresh, env config with dev-safe placeholders, `/api/health` connection check
+- [x] `S1-03` [Infra] Core DB schema & RLS — `organizations`, `profiles`, `org_members`, `projects`, `tasks`, `sprints`, `audit_log` tables, migrations, RLS policies per table
 - [ ] `S1-10` [Infra] CI/CD to Vercel — project linked, preview deployments on push, production deploy on main
 
 ### Docs
