@@ -42,12 +42,20 @@ export default async function ProjectPage({
           <h1 className="text-lg font-semibold text-slate-900">{project.name}</h1>
           {project.description && <p className="mt-1 text-sm text-slate-500">{project.description}</p>}
         </div>
-        <Link
-          href={`/org/${org.slug}/projects/${project.id}/sprints`}
-          className="shrink-0 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
-        >
-          Sprints
-        </Link>
+        <div className="flex shrink-0 gap-2">
+          <Link
+            href={`/org/${org.slug}/projects/${project.id}/sprints`}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            Sprints
+          </Link>
+          <Link
+            href={`/org/${org.slug}/projects/${project.id}/meetings`}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            Meetings
+          </Link>
+        </div>
       </div>
 
       <div className="rounded-lg border border-slate-200 bg-white p-4">

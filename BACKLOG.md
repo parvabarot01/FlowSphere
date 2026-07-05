@@ -46,7 +46,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S2-03` [Infra] Schema & RLS for Sprint 2 scope — `knowledge_base_pages`, `decision_log`, `action_items`, `automation_rules`, `approvals` (+ steps), `ai_reports`, `chat_threads`/`chat_messages` tables, migrations, RLS policies per table
 
 ### Features — AI agents + knowledge base
-- [ ] `S2-04` [Feature] Meeting transcript summarizer — paste transcript → structured AI summary + extracted action items auto-added to the task tracker
+- [x] `S2-04` [Feature] Meeting transcript summarizer — paste transcript → structured AI summary + extracted action items auto-added to the task tracker
 - [ ] `S2-05` [Feature] Department agent sprint plan / backlog draft — query a department agent for a sprint plan or backlog draft grounded in the project's existing tasks
 - [ ] `S2-06` [Feature] Knowledge base / wiki — create/edit pages, Postgres full-text search across the org's KB
 - [ ] `S2-07` [Feature] Decision log + action item tracker — log decisions tied to meeting summaries, track action items to completion
