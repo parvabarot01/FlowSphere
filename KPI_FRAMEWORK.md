@@ -1,6 +1,6 @@
 # KPI Framework (draft)
 
-Draft as of Sprint 1 — defines what should be measured and why. Instrumentation (actually capturing these events) is not yet built; that's a Sprint 2/3 follow-up once there's a real usage signal worth measuring. Recorded now so metric definitions don't drift as features get added.
+Draft as of Sprint 1, definitions unchanged through Sprint 2 (Final) — defines what should be measured and why. Instrumentation (actually capturing these events as a queryable analytics pipeline) is still not built; the AI-generated health score/report features that now exist (Sprint 2 Final) are user-triggered outputs, not an automated events pipeline that could feed this framework yet. That remains a follow-up once there's a real usage signal worth measuring against a live deployment. Recorded now so metric definitions don't drift as features get added.
 
 ## 1. Adoption
 
@@ -19,12 +19,12 @@ FlowSphere can't directly measure "hours saved" — that requires self-reported 
 | Metric | Definition | Why it's a proxy |
 |---|---|---|
 | Manual status updates avoided | Count of dashboard/board views by non-assignees (i.e., "checking status" without pinging someone) | Every such view is a Slack message or meeting that didn't have to happen |
-| Meeting-transcript-to-action-items usage (Sprint 2) | # transcripts submitted ÷ # sprints run | Direct measure of the flagship "automates the glue work" feature once it exists |
+| Meeting-transcript-to-action-items usage | # transcripts submitted ÷ # sprints run | Direct measure of the flagship "automates the glue work" feature, now shipped (Sprint 2 Final) — not yet instrumented for measurement |
 | Task updates per assignee per week | Median task status/assignee changes per active member | A rough floor for "is tracking actually happening here, or is the board stale" |
 
 ## 3. Project health score accuracy
 
-Sprint 3 introduces an AI-generated project health score. Before trusting it, this framework needs a way to check it isn't noise:
+Sprint 2 (Final) shipped an AI-generated project health score. Before trusting it, this framework needs a way to check it isn't noise:
 
 | Metric | Definition | Why it matters |
 |---|---|---|
@@ -32,6 +32,6 @@ Sprint 3 introduces an AI-generated project health score. Before trusting it, th
 | False "at risk" rate | % of "at risk" flags that a PM overrides as fine | High false-positive rate trains users to ignore the signal |
 | Score staleness | Time between an underlying change (e.g., sprint goes overdue) and the score reflecting it | A health score that lags reality by a week isn't actionable |
 
-## What Sprint 1 actually has today
+## What actually exists today
 
-No analytics/event-tracking pipeline exists yet — this section is deliberately just the audit log (append-only, who-did-what) plus whatever can be derived from raw table counts (members, projects, tasks, sprints) via direct queries. That's enough to sanity-check activation and weekly-active manually; a proper events pipeline is a Sprint 2+ decision once there's a concrete report (Sprint 2's meeting-summary/backlog features) that needs to consume it.
+No analytics/event-tracking pipeline exists yet, even after Sprint 2 (Final) — this section is deliberately just the audit log (append-only, who-did-what, now covering AI/automation/approval/report events too) plus whatever can be derived from raw table counts (members, projects, tasks, sprints, meeting summaries, automation rules) via direct queries. That's enough to sanity-check activation and weekly-active manually; a proper events pipeline is a future decision once there's a live deployment with real usage worth measuring.

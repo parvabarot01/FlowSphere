@@ -32,22 +32,17 @@ Security practices applied throughout: Supabase RLS on every table, schema valid
 
 Every service in this stack runs on a genuinely free tier. Real free-tier ceilings are tracked in `ARCHITECTURE.md` rather than exceeded silently.
 
-## Roadmap — three sprints to launch
+## Roadmap
 
-### Sprint 1 — Foundation, org structure, core collaboration primitives
+### Sprint 1 — Foundation, org structure, core collaboration primitives *(shipped)*
 A working multi-tenant workspace where teams can create and track work: auth, organizations, teams, RBAC, audit log; core schema (organizations/users/projects/tasks/sprints); project and task management UI with a sprint planning board; in-app and email notifications; calendar view; CI/CD to Vercel.
 
-**Done when:** a user can create an org, invite teammates, create a project with tasks, plan a sprint, and get notified of assignments.
+**Done when:** a user can create an org, invite teammates, create a project with tasks, plan a sprint, and get notified of assignments. All true as of Sprint 1.
 
-### Sprint 2 — AI department agents + knowledge base
-The AI agent layer becomes real and useful, and knowledge stops living in people's heads: a shared AI client with per-department system prompts (Product, Engineering, Marketing, etc.), AI-generated sprint plans/backlogs/meeting summaries, a knowledge base/wiki with full-text search, and a decision log tied to meeting summaries.
+### Sprint 2 (Final) — AI department agents, knowledge base, automation, reporting, executive layer *(shipped)*
+Originally planned as two separate sprints (AI agents + knowledge base, then workflow automation + reporting + launch polish), combined mid-project into one sprint with no pause in between — see `BACKLOG.md`. The AI agent layer, the automation/reporting layer, and the full hardening pass all shipped together: a shared Groq client with per-department system prompts, AI-generated sprint plans/backlogs, meeting-transcript summarization with auto-created action items, a knowledge base/wiki with full-text search, a decision log, trigger→action workflow automation, a sequential multi-step approvals module, AI-generated executive reports (weekly updates, health scores, risk analysis, dependency graphs), cross-team threaded chat, and an RLS/rate-limit/error-tracking/test-coverage hardening pass.
 
-**Done when:** a user can paste a meeting transcript and get a structured summary with action items auto-added to the task tracker, and can query a department agent for a sprint plan or backlog draft.
-
-### Sprint 3 — Workflow automation, reporting, executive layer, launch polish
-The automation and reporting layer that makes this an operating system, not just a task tool: trigger→action workflow rules, an approvals module, AI-generated executive reports (weekly updates, project health scores, risk analysis, dependency graphs), cross-team threaded chat, and a full hardening pass.
-
-**Done when:** the full loop — task/meeting activity → automation → AI report → executive rollup — is demoable end to end and deployed.
+**Done when:** a user can paste a meeting transcript and get a structured summary with action items auto-added to the task tracker; query a department agent for a sprint plan or backlog draft; automate a trigger→action rule; route a request through approval; get an AI executive report; and chat cross-team. All true as of this sprint — see `ROADMAP.md` for the full shipped checklist.
 
 ## Repo documents
 
