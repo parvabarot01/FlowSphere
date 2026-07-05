@@ -49,7 +49,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S2-04` [Feature] Meeting transcript summarizer — paste transcript → structured AI summary + extracted action items auto-added to the task tracker
 - [x] `S2-05` [Feature] Department agent sprint plan / backlog draft — query a department agent for a sprint plan or backlog draft grounded in the project's existing tasks
 - [x] `S2-06` [Feature] Knowledge base / wiki — create/edit pages, Postgres full-text search across the org's KB
-- [ ] `S2-07` [Feature] Decision log + action item tracker — log decisions tied to meeting summaries, track action items to completion
+- [x] `S2-07` [Feature] Decision log + action item tracker — log decisions tied to meeting summaries, track action items to completion
 
 ### Features — automation, reporting, executive layer
 - [ ] `S2-08` [Feature] Workflow automation rules — trigger→action rule builder (e.g. task status change → notify/assign), executed via QStash

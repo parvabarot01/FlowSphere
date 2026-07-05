@@ -61,6 +61,12 @@ export default async function ProjectPage({
           >
             Agent
           </Link>
+          <Link
+            href={`/org/${org.slug}/projects/${project.id}/decisions`}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            Decisions
+          </Link>
         </div>
       </div>
 
