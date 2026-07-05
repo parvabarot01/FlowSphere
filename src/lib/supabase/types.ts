@@ -32,6 +32,7 @@ export type Database = {
           avatar_url?: string | null;
           created_at?: string;
         };
+        Relationships: [];
       };
       organizations: {
         Row: {
@@ -55,6 +56,7 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
         };
+        Relationships: [];
       };
       org_members: {
         Row: {
@@ -78,6 +80,7 @@ export type Database = {
           role?: OrgRole;
           created_at?: string;
         };
+        Relationships: [];
       };
       projects: {
         Row: {
@@ -104,6 +107,7 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
         };
+        Relationships: [];
       };
       sprints: {
         Row: {
@@ -142,6 +146,7 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
         };
+        Relationships: [];
       };
       tasks: {
         Row: {
@@ -189,6 +194,7 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       audit_log: {
         Row: {
@@ -211,7 +217,8 @@ export type Database = {
           metadata?: Json;
           created_at?: string;
         };
-        Update: never;
+        Update: Record<string, never>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

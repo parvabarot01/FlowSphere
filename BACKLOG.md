@@ -26,7 +26,7 @@ Legend: `[ ]` open · `[x]` shipped
 
 ### Features
 - [x] `S1-04` [Feature] Auth — sign up / log in / log out via Supabase Auth, session handling, protected routes/middleware
-- [ ] `S1-05` [Feature] Organizations — create org, org settings, org switcher, RLS-scoped multi-tenancy
+- [x] `S1-05` [Feature] Organizations — create org, org settings, org switcher, RLS-scoped multi-tenancy
 - [ ] `S1-06` [Feature] Team invites & RBAC — invite by email, roles (owner/admin/member), accept-invite flow, role-gated actions
 - [ ] `S1-07` [Feature] Audit log — write-path hook recording key actions (org/member/project/task/sprint changes) + basic viewer UI
 - [ ] `S1-08` [Feature] Projects & tasks — create/assign/status CRUD, list + board view

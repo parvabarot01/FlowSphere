@@ -268,10 +268,10 @@ create policy "organizations_select_member" on public.organizations
   for select to authenticated
   using (public.is_org_member(id));
 
-create policy "organizations_update_owner" on public.organizations
+create policy "organizations_update_admin" on public.organizations
   for update to authenticated
-  using (public.get_org_role(id) = 'owner')
-  with check (public.get_org_role(id) = 'owner');
+  using (public.get_org_role(id) in ('owner', 'admin'))
+  with check (public.get_org_role(id) in ('owner', 'admin'));
 
 create policy "organizations_delete_owner" on public.organizations
   for delete to authenticated
