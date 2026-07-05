@@ -5,6 +5,7 @@ import { getJobHandler } from "@/lib/jobs/registry";
 // callback hits it directly), so every job handler must be imported here too,
 // not just wherever triggerAutomation()/publishJob() happen to be called from.
 import "@/lib/automation/engine";
+import "@/lib/reports/engine";
 
 export const dynamic = "force-dynamic";
 
