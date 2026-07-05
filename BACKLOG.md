@@ -25,7 +25,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [ ] `S1-D5` [Docs] `ROADMAP.md` — MVP → V1 → V2
 
 ### Features
-- [ ] `S1-04` [Feature] Auth — sign up / log in / log out via Supabase Auth, session handling, protected routes/middleware
+- [x] `S1-04` [Feature] Auth — sign up / log in / log out via Supabase Auth, session handling, protected routes/middleware
 - [ ] `S1-05` [Feature] Organizations — create org, org settings, org switcher, RLS-scoped multi-tenancy
 - [ ] `S1-06` [Feature] Team invites & RBAC — invite by email, roles (owner/admin/member), accept-invite flow, role-gated actions
 - [ ] `S1-07` [Feature] Audit log — write-path hook recording key actions (org/member/project/task/sprint changes) + basic viewer UI
