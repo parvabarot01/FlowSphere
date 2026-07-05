@@ -37,6 +37,9 @@ export default async function OrgLayout({
           <Link href={`/org/${org.slug}/members`} className="hover:text-slate-900">
             Members
           </Link>
+          <Link href={`/org/${org.slug}/calendar`} className="hover:text-slate-900">
+            Calendar
+          </Link>
           {isAdmin && (
             <Link href={`/org/${org.slug}/audit-log`} className="hover:text-slate-900">
               Audit Log

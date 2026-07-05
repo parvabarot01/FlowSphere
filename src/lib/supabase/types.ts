@@ -258,12 +258,59 @@ export type Database = {
         };
         Relationships: [];
       };
+      notifications: {
+        Row: {
+          id: string;
+          org_id: string;
+          user_id: string;
+          type: string;
+          title: string;
+          body: string | null;
+          link: string | null;
+          read_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id: string;
+          user_id: string;
+          type: string;
+          title: string;
+          body?: string | null;
+          link?: string | null;
+          read_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          user_id?: string;
+          type?: string;
+          title?: string;
+          body?: string | null;
+          link?: string | null;
+          read_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
       create_organization_with_owner: {
         Args: { p_name: string; p_slug: string };
         Returns: Database["public"]["Tables"]["organizations"]["Row"];
+      };
+      create_notification: {
+        Args: {
+          p_org_id: string;
+          p_user_id: string;
+          p_type: string;
+          p_title: string;
+          p_body: string | null;
+          p_link: string | null;
+        };
+        Returns: void;
       };
       log_audit_event: {
         Args: {
