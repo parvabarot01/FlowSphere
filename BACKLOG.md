@@ -18,11 +18,11 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S1-10` [Infra] CI/CD to Vercel — GitHub Actions (lint/typecheck/build) wired up; Vercel project linking documented as a manual one-time step in ARCHITECTURE.md (requires the user's own Vercel account)
 
 ### Docs
-- [ ] `S1-D1` [Docs] `PRD.md` (v1)
-- [ ] `S1-D2` [Docs] `PERSONAS.md` — Product Manager, Engineer, Designer/QA, Executive
-- [ ] `S1-D3` [Docs] `COMPETITIVE_ANALYSIS.md` — vs Notion, Jira, Asana, Monday, ClickUp
-- [ ] `S1-D4` [Docs] `KPI_FRAMEWORK.md` (draft) — adoption, time-saved proxy metrics, project health score accuracy
-- [ ] `S1-D5` [Docs] `ROADMAP.md` — MVP → V1 → V2
+- [x] `S1-D1` [Docs] `PRD.md` (v1)
+- [x] `S1-D2` [Docs] `PERSONAS.md` — Product Manager, Engineer, Designer/QA, Executive
+- [x] `S1-D3` [Docs] `COMPETITIVE_ANALYSIS.md` — vs Notion, Jira, Asana, Monday, ClickUp
+- [x] `S1-D4` [Docs] `KPI_FRAMEWORK.md` (draft) — adoption, time-saved proxy metrics, project health score accuracy
+- [x] `S1-D5` [Docs] `ROADMAP.md` — MVP → V1 → V2
 
 ### Features
 - [x] `S1-04` [Feature] Auth — sign up / log in / log out via Supabase Auth, session handling, protected routes/middleware
