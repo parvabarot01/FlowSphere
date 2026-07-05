@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getProjectMeetingSummaries } from "@/lib/meetings";
 import { SummarizeTranscriptForm } from "@/app/(app)/org/[slug]/projects/[projectId]/meetings/summarize-transcript-form";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export default async function MeetingsPage({
   params,
@@ -48,9 +49,9 @@ export default async function MeetingsPage({
       </div>
 
       {summaries.length > 0 && (
-        <ul className="space-y-3">
+        <StaggerList className="space-y-3">
           {summaries.map((s) => (
-            <li key={s.id} className="rounded-lg border border-slate-200 bg-white p-4">
+            <StaggerItem key={s.id} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
               <div className="flex items-center justify-between">
                 <p className="font-medium text-slate-900">{s.title}</p>
                 <span className="text-xs text-slate-400">{new Date(s.createdAt).toLocaleString()}</span>
@@ -77,9 +78,9 @@ export default async function MeetingsPage({
                   </ul>
                 </div>
               )}
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </StaggerList>
       )}
     </div>
   );

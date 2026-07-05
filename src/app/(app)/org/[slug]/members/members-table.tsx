@@ -2,6 +2,7 @@
 
 import type { OrgMemberRow } from "@/lib/members";
 import { updateMemberRole, removeMember } from "@/app/(app)/org/[slug]/members/actions";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export function MembersTable({
   members,
@@ -27,11 +28,11 @@ export function MembersTable({
             {isAdmin && <th className="px-4 py-2" />}
           </tr>
         </thead>
-        <tbody>
+        <StaggerList as="tbody">
           {members.map((member) => {
             const isSelf = member.userId === currentUserId;
             return (
-              <tr key={member.membershipId} className="border-b border-slate-100 last:border-0">
+              <StaggerItem as="tr" hover={false} key={member.membershipId} className="border-b border-slate-100 last:border-0">
                 <td className="px-4 py-2 text-slate-900">{member.fullName ?? "—"}</td>
                 <td className="px-4 py-2 text-slate-500">{member.email}</td>
                 <td className="px-4 py-2">
@@ -63,10 +64,10 @@ export function MembersTable({
                     )}
                   </td>
                 )}
-              </tr>
+              </StaggerItem>
             );
           })}
-        </tbody>
+        </StaggerList>
       </table>
     </div>
   );

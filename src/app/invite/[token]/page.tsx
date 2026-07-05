@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { AcceptInviteButton } from "@/app/invite/[token]/accept-invite-button";
+import { FadeIn } from "@/components/motion/fade-in";
 
 export default async function InvitePage({
   params,
@@ -18,7 +19,7 @@ export default async function InvitePage({
   if (error || !invite || invite.status !== "pending") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 text-center">
-        <div>
+        <FadeIn>
           <h1 className="text-xl font-semibold text-slate-900">Invite not found</h1>
           <p className="mt-2 text-sm text-slate-500">
             This invite link is invalid, expired, or has already been used.
@@ -26,7 +27,7 @@ export default async function InvitePage({
           <Link href="/login" className="mt-4 inline-block text-sm font-medium text-slate-900 hover:underline">
             Go to login
           </Link>
-        </div>
+        </FadeIn>
       </div>
     );
   }
@@ -39,7 +40,7 @@ export default async function InvitePage({
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 text-center">
-      <div className="max-w-sm space-y-4">
+      <FadeIn className="max-w-sm space-y-4">
         <h1 className="text-xl font-semibold text-slate-900">
           You&apos;re invited to join {invite.org_name}
         </h1>
@@ -86,7 +87,7 @@ export default async function InvitePage({
             After creating your account, come back to this link to finish joining.
           </p>
         )}
-      </div>
+      </FadeIn>
     </div>
   );
 }

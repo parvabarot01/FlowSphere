@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { listKnowledgeBasePages } from "@/lib/knowledge-base";
 import { CreatePageForm } from "@/app/(app)/org/[slug]/kb/create-page-form";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export default async function KnowledgeBasePage({
   params,
@@ -43,20 +44,20 @@ export default async function KnowledgeBasePage({
       </form>
 
       {pages.length > 0 ? (
-        <ul className="space-y-2">
+        <StaggerList className="space-y-2">
           {pages.map((page) => (
-            <li key={page.id}>
+            <StaggerItem key={page.id}>
               <Link
                 href={`/org/${org.slug}/kb/${page.slug}`}
-                className="block rounded-lg border border-slate-200 bg-white p-4 hover:border-slate-400"
+                className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:border-slate-400 hover:shadow-md"
               >
                 <p className="font-medium text-slate-900">{page.title}</p>
                 <p className="mt-1 text-sm text-slate-500">{page.snippet}</p>
                 <p className="mt-1 text-xs text-slate-400">Updated {new Date(page.updatedAt).toLocaleDateString()}</p>
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </StaggerList>
       ) : (
         <p className="text-sm text-slate-500">{query ? "No pages match your search." : "No pages yet."}</p>
       )}

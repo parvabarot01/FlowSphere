@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getProjectReports } from "@/lib/reports";
 import { RequestReportForm } from "@/app/(app)/org/[slug]/projects/[projectId]/reports/request-report-form";
 import { ReportCard } from "@/app/(app)/org/[slug]/projects/[projectId]/reports/report-card";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export default async function ReportsPage({
   params,
@@ -48,11 +49,13 @@ export default async function ReportsPage({
       </div>
 
       {reports.length > 0 ? (
-        <div className="space-y-3">
+        <StaggerList as="div" className="space-y-3">
           {reports.map((report) => (
-            <ReportCard key={report.id} report={report} />
+            <StaggerItem key={report.id} as="div">
+              <ReportCard report={report} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerList>
       ) : (
         <p className="text-sm text-slate-500">No reports yet.</p>
       )}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getProjectSprints } from "@/lib/sprints";
 import { CreateSprintForm } from "@/app/(app)/org/[slug]/projects/[projectId]/sprints/create-sprint-form";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 const STATUS_STYLES: Record<string, string> = {
   planned: "bg-slate-100 text-slate-600",
@@ -47,12 +48,12 @@ export default async function SprintsPage({
       </div>
 
       {sprints.length > 0 && (
-        <ul className="space-y-2">
+        <StaggerList className="space-y-2">
           {sprints.map((sprint) => (
-            <li key={sprint.id}>
+            <StaggerItem key={sprint.id}>
               <Link
                 href={`/org/${org.slug}/projects/${project.id}/sprints/${sprint.id}`}
-                className="block rounded-lg border border-slate-200 bg-white p-4 hover:border-slate-400"
+                className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:border-slate-400 hover:shadow-md"
               >
                 <div className="flex items-center justify-between">
                   <p className="font-medium text-slate-900">{sprint.name}</p>
@@ -68,9 +69,9 @@ export default async function SprintsPage({
                   </p>
                 )}
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </StaggerList>
       )}
 
       <div className="max-w-md rounded-lg border border-slate-200 bg-white p-5">

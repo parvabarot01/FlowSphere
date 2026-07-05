@@ -1,21 +1,8 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
 import { assignTaskToSprint } from "@/app/(app)/org/[slug]/projects/[projectId]/sprints/sprint-actions";
 import type { TaskSummary } from "@/lib/tasks";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="rounded-md bg-slate-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
-    >
-      Add to sprint
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export function AddTaskToSprintForm({
   orgId,
@@ -42,7 +29,7 @@ export function AddTaskToSprintForm({
           </option>
         ))}
       </select>
-      <SubmitButton />
+      <SubmitButton label="Add to sprint" size="sm" />
     </form>
   );
 }

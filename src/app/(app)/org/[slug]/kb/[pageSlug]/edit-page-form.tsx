@@ -1,21 +1,10 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
+import { motion } from "framer-motion";
 import { updateKnowledgeBasePage, deleteKnowledgeBasePage } from "@/app/(app)/org/[slug]/kb/actions";
 import type { KnowledgeBasePage } from "@/lib/knowledge-base";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
-    >
-      {pending ? "Saving..." : "Save"}
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export function EditPageForm({ orgId, orgSlug, page }: { orgId: string; orgSlug: string; page: KnowledgeBasePage }) {
   const updateWithIds = updateKnowledgeBasePage.bind(null, orgId, orgSlug, page.id, page.slug);
@@ -39,13 +28,18 @@ export function EditPageForm({ orgId, orgSlug, page }: { orgId: string; orgSlug:
           className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
         />
         {state.error && <p className="text-sm text-red-600">{state.error}</p>}
-        <SubmitButton />
+        <SubmitButton label="Save" pendingLabel="Saving..." />
       </form>
 
       <form action={deleteKnowledgeBasePage.bind(null, orgId, orgSlug, page.id)}>
-        <button type="submit" className="text-sm text-slate-400 hover:text-red-600">
+        <motion.button
+          type="submit"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="text-sm text-slate-400 transition-colors hover:text-red-600"
+        >
           Delete page
-        </button>
+        </motion.button>
       </form>
     </div>
   );

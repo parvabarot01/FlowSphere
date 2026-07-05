@@ -4,6 +4,7 @@ import { getProjectApprovals } from "@/lib/approvals";
 import { getOrgMembers } from "@/lib/members";
 import { RequestApprovalForm } from "@/app/(app)/org/[slug]/projects/[projectId]/approvals/request-approval-form";
 import { DecideStepForm } from "@/app/(app)/org/[slug]/projects/[projectId]/approvals/decide-step-form";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-slate-100 text-slate-600",
@@ -52,13 +53,13 @@ export default async function ApprovalsPage({
       </div>
 
       {approvals.length > 0 && (
-        <ul className="space-y-3">
+        <StaggerList className="space-y-3">
           {approvals.map((approval) => {
             const currentStep = approval.steps.find((s) => s.status === "pending");
             const isMyTurn = Boolean(currentStep && user && currentStep.approverId === user.id);
 
             return (
-              <li key={approval.id} className="rounded-lg border border-slate-200 bg-white p-4">
+              <StaggerItem key={approval.id} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-medium text-slate-900">{approval.title}</p>
                   <span className={`rounded px-1.5 py-0.5 text-xs uppercase tracking-wide ${STATUS_STYLES[approval.status]}`}>
@@ -88,10 +89,10 @@ export default async function ApprovalsPage({
                     <DecideStepForm orgSlug={org.slug} projectId={project.id} stepId={currentStep.id} decision="rejected" />
                   </div>
                 )}
-              </li>
+              </StaggerItem>
             );
           })}
-        </ul>
+        </StaggerList>
       )}
 
       <div className="max-w-2xl rounded-lg border border-slate-200 bg-white p-5">

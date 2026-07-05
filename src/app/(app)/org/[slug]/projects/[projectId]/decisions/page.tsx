@@ -5,6 +5,7 @@ import { getProjectActionItems } from "@/lib/action-items";
 import { getProjectMeetingSummaries } from "@/lib/meetings";
 import { CreateDecisionForm } from "@/app/(app)/org/[slug]/projects/[projectId]/decisions/create-decision-form";
 import { dismissActionItem } from "@/app/(app)/org/[slug]/projects/[projectId]/decisions/actions";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 const TASK_STATUS_LABEL: Record<string, string> = {
   todo: "To do",
@@ -58,11 +59,11 @@ export default async function DecisionsPage({
       <section className="space-y-3">
         <h2 className="text-sm font-semibold text-slate-900">Action item tracker</h2>
         {actionItems.length > 0 ? (
-          <ul className="space-y-2">
+          <StaggerList className="space-y-2">
             {actionItems.map((item) => (
-              <li
+              <StaggerItem
                 key={item.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3"
+                className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-md"
               >
                 <div>
                   <p className="text-sm text-slate-900">{item.description}</p>
@@ -85,9 +86,9 @@ export default async function DecisionsPage({
                     </form>
                   )}
                 </div>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerList>
         ) : (
           <p className="text-sm text-slate-500">No action items yet — summarize a meeting transcript to generate some.</p>
         )}
@@ -96,9 +97,9 @@ export default async function DecisionsPage({
       <section className="space-y-3">
         <h2 className="text-sm font-semibold text-slate-900">Decision log</h2>
         {decisions.length > 0 && (
-          <ul className="space-y-2">
+          <StaggerList className="space-y-2">
             {decisions.map((d) => (
-              <li key={d.id} className="rounded-lg border border-slate-200 bg-white p-4">
+              <StaggerItem key={d.id} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
                 <div className="flex items-center justify-between">
                   <p className="font-medium text-slate-900">{d.title}</p>
                   <span className="text-xs text-slate-400">{new Date(d.createdAt).toLocaleDateString()}</span>
@@ -106,9 +107,9 @@ export default async function DecisionsPage({
                 <p className="mt-1 text-sm text-slate-600">{d.decision}</p>
                 {d.rationale && <p className="mt-1 text-xs text-slate-400">Why: {d.rationale}</p>}
                 {d.decidedByName && <p className="mt-1 text-xs text-slate-400">Decided by {d.decidedByName}</p>}
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerList>
         )}
 
         <div className="max-w-md rounded-lg border border-slate-200 bg-white p-5">

@@ -1,21 +1,10 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { requestAgentDraft } from "@/app/(app)/org/[slug]/projects/[projectId]/agent/actions";
 import { DEPARTMENTS } from "@/lib/ai/departments";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
-    >
-      {pending ? "Drafting..." : "Generate draft"}
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export function AgentDraftForm({
   orgId,
@@ -59,15 +48,23 @@ export function AgentDraftForm({
         />
         <div className="sm:col-span-2">
           {state.error && <p className="mb-2 text-sm text-red-600">{state.error}</p>}
-          <SubmitButton />
+          <SubmitButton label="Generate draft" pendingLabel="Drafting..." />
         </div>
       </form>
 
-      {state.draft && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <p className="whitespace-pre-wrap text-sm text-slate-700">{state.draft}</p>
-        </div>
-      )}
+      <AnimatePresence>
+        {state.draft && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+          >
+            <p className="whitespace-pre-wrap text-sm text-slate-700">{state.draft}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

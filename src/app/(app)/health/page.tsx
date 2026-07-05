@@ -1,4 +1,5 @@
 import { getHealthStatus } from "@/lib/health";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export const dynamic = "force-dynamic";
 
@@ -29,11 +30,11 @@ export default async function HealthPage() {
         </p>
       </div>
 
-      <ul className="space-y-2">
+      <StaggerList className="space-y-2">
         {services.map((service) => (
-          <li
+          <StaggerItem
             key={service.name}
-            className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4"
+            className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
           >
             <div>
               <p className="font-medium text-slate-900">{service.name}</p>
@@ -42,9 +43,9 @@ export default async function HealthPage() {
             <span className={`shrink-0 rounded px-1.5 py-0.5 text-xs ${STATUS_STYLES[service.status]}`}>
               {STATUS_LABEL[service.status]}
             </span>
-          </li>
+          </StaggerItem>
         ))}
-      </ul>
+      </StaggerList>
     </div>
   );
 }

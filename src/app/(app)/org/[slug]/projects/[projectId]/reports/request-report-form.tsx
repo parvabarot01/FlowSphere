@@ -1,20 +1,8 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { requestReport } from "@/app/(app)/org/[slug]/projects/[projectId]/reports/actions";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
-    >
-      {pending ? "Requesting..." : "Generate report"}
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export function RequestReportForm({
   orgId,
@@ -42,7 +30,7 @@ export function RequestReportForm({
         <option value="risk_analysis">Risk analysis</option>
         <option value="dependency_graph">Dependency graph</option>
       </select>
-      <SubmitButton />
+      <SubmitButton label="Generate report" pendingLabel="Requesting..." />
       {state.error && <p className="w-full text-sm text-red-600">{state.error}</p>}
     </form>
   );

@@ -2,6 +2,7 @@
 
 import type { OrgInviteRow } from "@/lib/members";
 import { revokeInvite } from "@/app/(app)/org/[slug]/members/actions";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export function PendingInvitesList({
   invites,
@@ -17,9 +18,9 @@ export function PendingInvitesList({
   return (
     <div className="space-y-2">
       <h2 className="text-sm font-semibold text-slate-900">Pending invites</h2>
-      <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      <StaggerList className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
         {invites.map((invite) => (
-          <li key={invite.id} className="flex items-center justify-between px-4 py-2 text-sm">
+          <StaggerItem key={invite.id} hover={false} className="flex items-center justify-between px-4 py-2 text-sm">
             <span className="text-slate-700">
               {invite.email}{" "}
               <span className="text-xs uppercase tracking-wide text-slate-400">({invite.role})</span>
@@ -29,9 +30,9 @@ export function PendingInvitesList({
                 Revoke
               </button>
             </form>
-          </li>
+          </StaggerItem>
         ))}
-      </ul>
+      </StaggerList>
     </div>
   );
 }

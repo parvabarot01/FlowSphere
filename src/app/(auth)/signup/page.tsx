@@ -1,21 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { signup } from "@/app/(auth)/actions";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
-    >
-      {pending ? "Creating account..." : "Sign up"}
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export default function SignupPage() {
   const [state, formAction] = useFormState(signup, {});
@@ -74,7 +62,7 @@ export default function SignupPage() {
         {state.error && <p className="text-sm text-red-600">{state.error}</p>}
         {state.message && <p className="text-sm text-emerald-600">{state.message}</p>}
 
-        <SubmitButton />
+        <SubmitButton label="Sign up" pendingLabel="Creating account..." className="w-full" />
       </form>
 
       <p className="text-center text-sm text-slate-500">

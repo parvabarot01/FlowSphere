@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import { markNotificationRead } from "@/app/(app)/notification-actions";
 import type { NotificationRow } from "@/lib/notifications";
+import { AnimatedDropdown } from "@/components/motion/animated-dropdown";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export function NotificationsBell({
   userId,
@@ -67,43 +70,48 @@ export function NotificationsBell({
 
   return (
     <div className="relative">
-      <button
+      <motion.button
         type="button"
         onClick={() => setOpen((o) => !o)}
+        whileTap={{ scale: 0.95 }}
         className="relative rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-100"
       >
         Notifications
         {unreadCount > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] text-white">
+          <motion.span
+            key={unreadCount}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+            className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] text-white"
+          >
             {unreadCount > 9 ? "9+" : unreadCount}
-          </span>
+          </motion.span>
         )}
-      </button>
+      </motion.button>
 
-      {open && (
-        <div className="absolute right-0 z-10 mt-2 w-80 rounded-lg border border-slate-200 bg-white shadow-lg">
-          {notifications.length === 0 ? (
-            <p className="p-4 text-sm text-slate-500">No notifications yet.</p>
-          ) : (
-            <ul className="max-h-96 divide-y divide-slate-100 overflow-y-auto">
-              {notifications.map((n) => (
-                <li key={n.id}>
-                  <a
-                    href={n.link ?? "#"}
-                    onClick={() => handleClick(n)}
-                    className={`block px-4 py-3 text-sm hover:bg-slate-50 ${
-                      n.readAt ? "text-slate-500" : "font-medium text-slate-900"
-                    }`}
-                  >
-                    <p>{n.title}</p>
-                    <p className="mt-0.5 text-xs text-slate-400">{new Date(n.createdAt).toLocaleString()}</p>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <AnimatedDropdown show={open} className="absolute right-0 z-10 mt-2 w-80 rounded-lg border border-slate-200 bg-white shadow-lg">
+        {notifications.length === 0 ? (
+          <p className="p-4 text-sm text-slate-500">No notifications yet.</p>
+        ) : (
+          <StaggerList className="max-h-96 divide-y divide-slate-100 overflow-y-auto">
+            {notifications.map((n) => (
+              <StaggerItem key={n.id} hover={false}>
+                <a
+                  href={n.link ?? "#"}
+                  onClick={() => handleClick(n)}
+                  className={`block px-4 py-3 text-sm hover:bg-slate-50 ${
+                    n.readAt ? "text-slate-500" : "font-medium text-slate-900"
+                  }`}
+                >
+                  <p>{n.title}</p>
+                  <p className="mt-0.5 text-xs text-slate-400">{new Date(n.createdAt).toLocaleString()}</p>
+                </a>
+              </StaggerItem>
+            ))}
+          </StaggerList>
+        )}
+      </AnimatedDropdown>
     </div>
   );
 }

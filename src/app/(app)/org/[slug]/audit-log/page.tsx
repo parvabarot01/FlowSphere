@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getUserOrganizations } from "@/lib/orgs";
 import { getAuditLog } from "@/lib/audit";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 function formatAction(action: string) {
   return action.replace(/\./g, " ").replace(/_/g, " ");
@@ -40,9 +41,9 @@ export default async function AuditLogPage({ params }: { params: { slug: string 
       {entries.length === 0 ? (
         <p className="text-sm text-slate-500">No activity recorded yet.</p>
       ) : (
-        <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+        <StaggerList className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
           {entries.map((entry) => (
-            <li key={entry.id} className="flex items-start justify-between gap-4 px-4 py-3 text-sm">
+            <StaggerItem key={entry.id} hover={false} className="flex items-start justify-between gap-4 px-4 py-3 text-sm">
               <div>
                 <p className="text-slate-900">
                   <span className="font-medium">{entry.actorName ?? entry.actorEmail ?? "System"}</span>{" "}
@@ -56,9 +57,9 @@ export default async function AuditLogPage({ params }: { params: { slug: string 
               <time className="shrink-0 whitespace-nowrap text-xs text-slate-400" dateTime={entry.createdAt}>
                 {new Date(entry.createdAt).toLocaleString()}
               </time>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </StaggerList>
       )}
     </div>
   );

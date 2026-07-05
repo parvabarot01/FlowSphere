@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getOrgProjects } from "@/lib/projects";
 import { CreateProjectForm } from "@/app/(app)/org/[slug]/create-project-form";
+import { StaggerList, StaggerItem } from "@/components/motion/stagger-list";
 
 export default async function OrgHomePage({ params }: { params: { slug: string } }) {
   const supabase = createClient();
@@ -26,21 +27,21 @@ export default async function OrgHomePage({ params }: { params: { slug: string }
       </div>
 
       {projects.length > 0 && (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerList className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <li key={project.id}>
+            <StaggerItem key={project.id}>
               <Link
                 href={`/org/${org.slug}/projects/${project.id}`}
-                className="block rounded-lg border border-slate-200 bg-white p-4 hover:border-slate-400"
+                className="block rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:border-slate-400 hover:shadow-md"
               >
                 <p className="font-medium text-slate-900">{project.name}</p>
                 {project.description && (
                   <p className="mt-1 line-clamp-2 text-sm text-slate-500">{project.description}</p>
                 )}
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </StaggerList>
       )}
 
       <div className="max-w-md rounded-lg border border-slate-200 bg-white p-5">

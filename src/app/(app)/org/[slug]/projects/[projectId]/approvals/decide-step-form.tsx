@@ -1,24 +1,8 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { decideApprovalStep } from "@/app/(app)/org/[slug]/projects/[projectId]/approvals/actions";
-
-function SubmitButton({ decision }: { decision: "approved" | "rejected" }) {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className={
-        decision === "approved"
-          ? "rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
-          : "rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-50"
-      }
-    >
-      {decision === "approved" ? "Approve" : "Reject"}
-    </button>
-  );
-}
+import { SubmitButton } from "@/components/submit-button";
 
 export function DecideStepForm({
   orgSlug,
@@ -42,7 +26,11 @@ export function DecideStepForm({
         placeholder="Comment (optional)"
         className="rounded-md border border-slate-300 px-2 py-1 text-xs focus:border-slate-500 focus:outline-none"
       />
-      <SubmitButton decision={decision} />
+      <SubmitButton
+        label={decision === "approved" ? "Approve" : "Reject"}
+        variant={decision === "approved" ? "success" : "danger"}
+        size="xs"
+      />
       {state.error && <span className="text-xs text-red-600">{state.error}</span>}
     </form>
   );
