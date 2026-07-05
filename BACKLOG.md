@@ -62,7 +62,7 @@ Legend: `[ ]` open · `[x]` shipped
 - [x] `S2-13` [Hardening] Error tracking wired in (free-tier service) + core-flow test coverage (auth, org, task, sprint, agent, automation happy paths)
 
 ### Docs
-- [ ] `S2-D1` [Docs] `ARCHITECTURE.md` update — full schema, API surface, agent design
+- [x] `S2-D1` [Docs] `ARCHITECTURE.md` update — full schema, API surface, agent design
 - [ ] `S2-D2` [Docs] `EXECUTIVE_SUMMARY.md`
 - [ ] `S2-D3` [Docs] `GTM_STRATEGY.md`
 - [ ] `S2-D4` [Docs] `PRICING_STRATEGY.md`

@@ -1,6 +1,6 @@
 # Architecture
 
-Living document, updated every sprint. Sprint 1 covers the database schema and RLS model. API surface and agent design are added in Sprint 2.
+Living document, updated every sprint. Sprint 1 covers the database schema and RLS model. Sprint 2 (final) adds the AI agent layer, automation/approvals/reporting, chat, and the API surface and agent design sections below.
 
 ## Multi-tenancy model
 
@@ -74,6 +74,46 @@ Every route that spends a shared free-tier quota is throttled per-actor via `rat
 - **`login`** / **`signup`** (Sprint 1): per IP+email and per IP respectively, to slow credential-stuffing and signup spam.
 
 RLS-wise, the Sprint 2 tables follow the same two patterns already established in Sprint 1: plain member-scoped CRUD (`meeting_summaries`, `action_items`, `decision_log`, `knowledge_base_pages`, `automation_rules` — delete admin-gated) for anything a member should freely manage, and trusted-gateway-only writes (`approvals`/`approval_steps` via `create_approval_request`/`decide_approval_step`, `ai_reports` via the service-role background job) for anything where a direct client write would let someone forge state — approving their own request, or hand-writing a fake AI report.
+
+## Agent design
+
+All AI features go through one shared Groq client (`src/lib/ai/groq-client.ts`, Llama 3.3 70B) — there's no per-feature client or API key. Two entry points sit on top of it:
+
+- **`runDepartmentAgent({ department, messages })`** — used where the response should sound like a specific department (Product, Engineering, Design/QA, Executive). The department's fixed system prompt (`src/lib/ai/departments.ts`) is prepended server-side; callers only ever supply the conversational content, never the prompt itself. Used by the sprint-plan/backlog draft generator (`src/lib/ai/agent-draft.ts`).
+- **`runAgentCompletion({ systemPrompt, messages })`** — used where the task isn't department-flavored (transcript summarization, executive reports). Callers own the system prompt.
+
+Both go through the same `completeWithRetry` path: up to 3 retries with exponential backoff on 429/5xx, because Groq's free tier is rate-limited per-minute and a 429 there is an expected, recoverable condition rather than a bug (see `ai-agent` rate limit below, which throttles the app's own callers so this backoff path is rarely hit in the first place).
+
+Anywhere the AI is expected to return structured data (meeting summaries, agent-generated reports), the call sets `jsonMode: true` (Groq's `response_format: { type: "json_object" }`) and the caller parses the response with a Zod schema before trusting it — `src/lib/ai/meeting-summary.ts` and `src/lib/ai/report-generation.ts` follow this exact pattern: call → `JSON.parse` → `schema.safeParse` → typed result or `{ success: false, error }`. Nothing downstream ever touches unvalidated AI output.
+
+**Background AI work** (report generation, automation rule execution) doesn't run inline in the request that triggered it — it goes through `publishJob()` (`src/lib/qstash.ts`), which either queues it on QStash or, if QStash isn't configured, runs the registered handler inline so local dev keeps working end-to-end. Handlers register themselves via `registerJobHandler()` (`src/lib/jobs/registry.ts`) as a side effect of being imported — `src/lib/automation/trigger.ts` and `src/lib/reports/trigger.ts` both import their engine module before calling `publishJob()` specifically so this registration has already happened, and `src/app/api/jobs/route.ts` (the real QStash webhook target) imports both engines directly for the same reason, since it runs in its own separate module graph. These background jobs use the service-role Supabase client (bypasses RLS) since they aren't tied to a user session — `ai_reports` rows and `automation.rule_fired` audit entries are written this way.
+
+## API surface
+
+Nothing in this app is a traditional REST API — almost everything is a Next.js Server Action colocated with the page that uses it. The only real HTTP routes are:
+
+| Route | Purpose |
+|---|---|
+| `GET /api/health` | Supabase connectivity check (Sprint 1). |
+| `POST /api/jobs` | QStash webhook target — signature-verified, dispatches to whichever job handler registered for the `type` in the request body. |
+
+Server actions, grouped by area (each colocated in an `actions.ts` next to its page):
+
+| Area | File | Key actions |
+|---|---|---|
+| Auth | `src/app/(auth)/actions.ts` | `login`, `signup`, `logout` |
+| Organizations | `src/app/(app)/org/actions.ts` | `createOrganization`, `updateOrganizationName` |
+| Members/invites | `.../org/[slug]/members/actions.ts` | `inviteMember`, `revokeInvite`, `updateMemberRole`, `removeMember` |
+| Projects/tasks | `.../[slug]/project-actions.ts`, `.../[projectId]/task-actions.ts` | `createProject`, `createTask`, `updateTaskStatus` (both fire `triggerAutomation`), `updateTaskAssignee`, `deleteTask` |
+| Sprints | `.../sprints/sprint-actions.ts` | `createSprint`, `updateSprintStatus`, `assignTaskToSprint` |
+| Meeting summaries | `.../meetings/actions.ts` | `summarizeTranscript` (Groq → `meeting_summaries` + auto-created `tasks`/`action_items`) |
+| Department agent | `.../agent/actions.ts` | `requestAgentDraft` |
+| Knowledge base | `.../kb/actions.ts` | `createKnowledgeBasePage`, `updateKnowledgeBasePage`, `deleteKnowledgeBasePage` |
+| Decisions | `.../decisions/actions.ts` | `createDecision`, `dismissActionItem` |
+| Automation | `.../automation/actions.ts` | `createAutomationRule`, `toggleAutomationRule`, `deleteAutomationRule` |
+| Approvals | `.../approvals/actions.ts` | `requestApproval` (→ `create_approval_request` RPC), `decideApprovalStep` (→ `decide_approval_step` RPC) |
+| Reports | `.../reports/actions.ts` | `requestReport` (→ `triggerReportGeneration`, async) |
+| Chat | `.../chat/actions.ts` | `createThread`, `postMessage` |
 
 ## CI/CD
 
