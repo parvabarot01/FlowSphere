@@ -54,11 +54,11 @@ export default async function Home() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-indigo-300/40 blur-3xl" />
-        <div className="absolute -right-24 top-40 h-80 w-80 rounded-full bg-violet-300/40 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-sky-300/30 blur-3xl" />
+    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -left-40 -top-40 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
+        <div className="absolute -right-32 -top-20 h-64 w-64 rounded-full bg-violet-200/30 blur-3xl" />
+        <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-sky-200/25 blur-3xl" />
       </div>
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-20 px-6 pb-24 pt-24 text-center">
@@ -67,10 +67,7 @@ export default async function Home() {
             AI-native workplace operating system
           </span>
           <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-slate-900">
-            One workspace,{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-              not a stack of five
-            </span>
+            One workspace, <span className="text-indigo-600">not a stack of five</span>
           </h1>
           <p className="max-w-xl text-lg text-slate-500">
             FlowSphere replaces the Slack + Jira + Notion + Confluence sprawl with one collaborative
