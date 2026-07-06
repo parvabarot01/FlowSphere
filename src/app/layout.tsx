@@ -15,7 +15,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "FlowSphere",
-  description: "One workspace for sprint planning, tasks, and team knowledge.",
+  description:
+    "The AI-native workplace operating system — sprint planning, tasks, knowledge base, automation, and an AI agent for every department, in one workspace.",
 };
 
 export default function RootLayout({

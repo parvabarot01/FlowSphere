@@ -9,11 +9,11 @@ import {
   deleteTask,
 } from "@/app/(app)/org/[slug]/projects/[projectId]/task-actions";
 
-const COLUMNS: { status: TaskSummary["status"]; label: string }[] = [
-  { status: "todo", label: "To do" },
-  { status: "in_progress", label: "In progress" },
-  { status: "in_review", label: "In review" },
-  { status: "done", label: "Done" },
+const COLUMNS: { status: TaskSummary["status"]; label: string; accent: string }[] = [
+  { status: "todo", label: "To do", accent: "bg-slate-300" },
+  { status: "in_progress", label: "In progress", accent: "bg-indigo-400" },
+  { status: "in_review", label: "In review", accent: "bg-amber-400" },
+  { status: "done", label: "Done", accent: "bg-emerald-400" },
 ];
 
 const PRIORITY_STYLES: Record<TaskSummary["priority"], string> = {
@@ -43,7 +43,8 @@ export function TaskBoard({
           const columnTasks = tasks.filter((t) => t.status === column.status);
           return (
             <div key={column.status} className="space-y-3">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <span className={`h-2 w-2 rounded-full ${column.accent}`} />
                 {column.label} <span className="text-slate-400">({columnTasks.length})</span>
               </h2>
               <div className="space-y-2">

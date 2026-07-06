@@ -56,7 +56,7 @@ export default async function InvitePage({
           <div className="flex justify-center gap-3">
             <Link
               href="/signup"
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+              className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-indigo-600/20 hover:from-indigo-500 hover:to-violet-500"
             >
               Sign up
             </Link>

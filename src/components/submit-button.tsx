@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { useFormStatus } from "react-dom";
 
 const VARIANT_STYLES: Record<"primary" | "success" | "danger", string> = {
-  primary: "bg-slate-900 hover:bg-slate-700",
+  primary:
+    "bg-gradient-to-r from-indigo-600 to-violet-600 shadow-sm shadow-indigo-600/20 hover:from-indigo-500 hover:to-violet-500",
   success: "bg-emerald-600 hover:bg-emerald-700",
   danger: "bg-red-600 hover:bg-red-700",
 };
