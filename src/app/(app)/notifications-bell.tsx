@@ -105,7 +105,7 @@ export function NotificationsBell({
                   }`}
                 >
                   <p>{n.title}</p>
-                  <p className="mt-0.5 text-xs text-slate-400">{new Date(n.createdAt).toLocaleString()}</p>
+                  <p className="mt-0.5 text-xs text-slate-400">{new Date(n.createdAt).toLocaleString("en-US")}</p>
                 </a>
               </StaggerItem>
             ))}

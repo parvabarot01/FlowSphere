@@ -59,7 +59,7 @@ export function ChatThreadView({
           <li key={m.id}>
             <div className="flex items-baseline gap-2">
               <span className="text-sm font-medium text-slate-900">{m.authorName}</span>
-              <span className="text-xs text-slate-400">{new Date(m.createdAt).toLocaleString()}</span>
+              <span className="text-xs text-slate-400">{new Date(m.createdAt).toLocaleString("en-US")}</span>
             </div>
             <p className="whitespace-pre-wrap text-sm text-slate-600">{m.body}</p>
           </li>

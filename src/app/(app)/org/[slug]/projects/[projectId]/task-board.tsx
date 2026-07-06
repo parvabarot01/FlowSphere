@@ -83,7 +83,7 @@ export function TaskBoard({
 
                       {task.dueDate && (
                         <p className="mt-1 text-xs text-slate-400">
-                          Due {new Date(task.dueDate).toLocaleDateString()}
+                          Due {new Date(task.dueDate).toLocaleDateString("en-US")}
                         </p>
                       )}
 
