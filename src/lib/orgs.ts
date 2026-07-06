@@ -11,9 +11,18 @@ export type UserOrgSummary = {
 export async function getUserOrganizations(): Promise<UserOrgSummary[]> {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return [];
+  }
+
   const { data: memberships, error: membershipError } = await supabase
     .from("org_members")
-    .select("org_id, role");
+    .select("org_id, role")
+    .eq("user_id", user.id);
 
   if (membershipError || !memberships || memberships.length === 0) {
     return [];
