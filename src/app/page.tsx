@@ -61,7 +61,19 @@ export default async function Home() {
         <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-sky-200/25 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-20 px-6 pb-24 pt-24 text-center">
+      <header className="relative mx-auto flex max-w-5xl items-center justify-between px-6 pt-8">
+        <span className="flex items-center gap-2 text-base font-semibold text-slate-900">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-sm text-white">
+            ✦
+          </span>
+          FlowSphere
+        </span>
+        <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-indigo-600">
+          Log in
+        </Link>
+      </header>
+
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-20 px-6 pb-24 pt-16 text-center">
         <FadeIn className="flex flex-col items-center gap-6">
           <span className="rounded-full bg-white px-4 py-1.5 text-xs font-medium text-indigo-600 shadow-sm ring-1 ring-indigo-100">
             AI-native workplace operating system
@@ -77,7 +89,7 @@ export default async function Home() {
           <div className="flex flex-wrap justify-center gap-3">
             <Link
               href="/signup"
-              className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-medium text-white shadow-md shadow-indigo-600/20 transition hover:from-indigo-500 hover:to-violet-500 hover:shadow-lg hover:shadow-indigo-600/30"
+              className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-600/30"
             >
               Get started free
             </Link>

@@ -21,13 +21,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-3">
-        <Link href="/dashboard" className="flex items-center gap-2 text-lg font-semibold">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-sm text-white">
+        <Link href="/dashboard" className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-sm text-white">
             ✦
           </span>
-          <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-            FlowSphere
-          </span>
+          FlowSphere
         </Link>
         <div className="flex items-center gap-4">
           <Link href="/health" className="text-sm text-slate-500 hover:text-indigo-600">
