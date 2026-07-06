@@ -50,4 +50,4 @@ Run `npm test` for the unit test suite, `npm run lint` / `npx tsc --noEmit` for 
 
 ## License
 
-Proprietary — all rights reserved.
+Proprietary — all rights reserved. See [LICENSE](LICENSE).
